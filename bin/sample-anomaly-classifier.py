@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pysparkling import H2OContext
 import h2o
+from pyspark.ml.feature import VectorAssembler
 
 sys.path.insert(0, r'C:\JUNIPER\JNPR_X1_Carbon\omgamganapathayenamaha\Sastry\AT_Technical_Assessment_Task\FraudTransactionDetector')
 from fraudtransactiondetector.utils import get_cols_with_missing_values, fill_missing_vals_in_integer_feature, fill_missing_vals_in_categorical_feature
@@ -84,5 +85,19 @@ exempt_cols = ['consumer_id']
 df = fill_missing_vals_in_categorical_feature(df, col, exempt_cols, considered_cols)
 print('Pyspark Data Frame Size after handling NA in gender col is : {} rows, {} columns'.format(df.count(), len(df.columns)))
 
+# Preparing the FEATURES Data to invoke the MODEL which 
+# does Clustering, Anamoly Detection and build a Classification Model
+considered_cols = ['has_gender','has_first_name', 'has_last_name', 'has_email', 'has_dob', 'account_age', 'account_last_updated', 'account_status', 'app_downloads', 'unique_offer_clicked', 'total_offer_clicks', 'unique_offer_rides', 'total_offer_rides', 'avg_claims', 'min_claims', 'max_claims', 'total_offers_claimed', 'customer_age', 'gender']
+exempt_cols = ['consumer_id']
 
+vec = VectorAssembler(inputCols=considered_cols, outputCol='features')
+df = vec.transform(df)
+
+# Identify optimal number of clusters 
+num_clusters = 4
+from fraudtransactiondetector import FraudTransactionClassifier
+classifier = FraudTransactionClassifier(num_clusters=num_clusters,
+                                        quantile=0.99)
+newdf = classifier.fit(df)
+newdf.groupBy(newdf.seg).agg({'seg':'count'}).show()
 

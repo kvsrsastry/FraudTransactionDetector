@@ -7,7 +7,7 @@ from pyspark.sql import SparkSession
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from pysparkling import H2OContext
+#from pysparkling import H2OContext
 import h2o
 from pyspark.ml.feature import VectorAssembler
 
@@ -15,13 +15,14 @@ sys.path.insert(0, r'C:\JUNIPER\JNPR_X1_Carbon\omgamganapathayenamaha\Sastry\AT_
 from fraudtransactiondetector.utils import get_cols_with_missing_values, fill_missing_vals_in_integer_feature, fill_missing_vals_in_categorical_feature
 
 h2o.init()
-del os.environ["PYSPARK_SUBMIT_ARGS"]
+if "PYSPARK_SUBMIT_ARGS" in os.environ:
+    del os.environ["PYSPARK_SUBMIT_ARGS"]
 
 # Creating the Spark Session
-spark = SparkSession.builder.appName('Fraud-Transaction-Classifier').master('local[*]').getOrCreate()
+spark = SparkSession.builder.appName('Fraud-Transaction-Classifier').getOrCreate()
 
 # H2O Context is needed for converting Pyspark DataFrames to H2O Frames
-hc = H2OContext.getOrCreate(spark)
+#hc = H2OContext.getOrCreate(spark)
 
 def get_pyspark_dataframe(filepath):
     print('Reading the file {} ...'.format(filepath))
@@ -99,5 +100,5 @@ from fraudtransactiondetector import FraudTransactionClassifier
 classifier = FraudTransactionClassifier(num_clusters=num_clusters,
                                         quantile=0.99)
 newdf = classifier.fit(df)
-newdf.groupBy(newdf.seg).agg({'seg':'count'}).show()
+print('{} : {}'.format(newdf.filter(newdf.anomaly == 1).count(), newdf.filter(~(newdf.anomaly == 1)).count()))
 

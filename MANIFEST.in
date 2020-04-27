@@ -1,0 +1,5 @@
+include *.txt
+recursive-include docs *.txt
+include *.ods
+recursive-include data *.ods
+

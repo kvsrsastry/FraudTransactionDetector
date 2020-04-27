@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='FraudTransactionDetector',
-    version='0.1.3dev',
+    version='0.1.4',
     author='Venkata Siva Rama Sastry Kavuri',
     author_email='sivaram.kavuri@gmail.com',
     packages=['fraudtransactiondetector',],

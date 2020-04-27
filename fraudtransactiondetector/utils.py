@@ -15,6 +15,7 @@ import pandas as pd
 # Finding Columns with NA Values
 def get_cols_with_missing_values(df):
     '''
+    Detects columns with Missing values in a Pyspark Data Frame
     '''
     cols = df.columns
     summ = dict()
@@ -29,6 +30,7 @@ def get_cols_with_missing_values(df):
 
 def _get_xgboost_regressor_model(col, train):
     '''
+    Gradient Boosted Tree Regressor Model is created for predicting Missing Values
     '''
     print('Using Gradient Boosted Regressor Module to predict Missing Values ...')
     reg_model = GBTRegressor(labelCol=col)
@@ -44,6 +46,7 @@ def _get_xgboost_regressor_model(col, train):
 
 def fill_missing_vals_in_integer_feature(df, col, exempt_cols, considered_cols):
     '''
+    Fills in Missing values by creating Gradient Boosted Tree Regressor Model
     '''
     vec = VectorAssembler(inputCols=considered_cols, outputCol='features')
     df = vec.transform(df)
@@ -66,6 +69,7 @@ def fill_missing_vals_in_integer_feature(df, col, exempt_cols, considered_cols):
 
 def _get_xgboost_classifier_model(col, train):
     '''
+    Gradient Boosted Tree Classifier Model is created for predicting Missing Values
     '''
     print('Using Gradient Boosted Regressor Module to predict Missing Values ...')
     cla_model = GBTClassifier(labelCol=col)
@@ -81,6 +85,7 @@ def _get_xgboost_classifier_model(col, train):
 
 def fill_missing_vals_in_categorical_feature(df, col, exempt_cols, considered_cols):
     '''
+    Fills in Missing values by creating Gradient Boosted Tree Classification Model
     '''
     vec = VectorAssembler(inputCols=considered_cols, outputCol='features')
     df = vec.transform(df)

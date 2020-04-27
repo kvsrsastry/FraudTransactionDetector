@@ -107,8 +107,8 @@ results = classifier.transform(df)
 print('Number of Outliers in the given dataset of size {} are : {}'.format(results.count(), results.filter(results.prediction == 1).count()))
 
 # Apply PCA and Visualize
-classifier.visualizeByApplyingPCA()
+#classifier.visualizeByApplyingPCA()
 
 # Select optimal number of clusters using Elbow Method
-classifier.selectOptimalClusters(df)
+#classifier.selectOptimalClusters(df)
 

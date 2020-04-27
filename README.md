@@ -60,3 +60,20 @@ Below is the sample usage::
 
         # Select optimal number of clusters using Elbow Method
         classifier.selectOptimalClusters(df)
+
+Software Requirements
+=====================
+Before installing the package, please ensure that the following softwares are
+installed:
+
+    * Apache Spark 2.4.3 toward pyspark
+    * Java (JDK 8)
+
+Along with the package, the below packages will be installed when you
+do 'pip install FraudTransactionDetector':
+
+    * h2o == 3.30.0.1
+    * pandas == 0.25.1
+    * numpy == 1.16.5
+    * matplotlib == 3.1.3
+    * scikit-learn == 0.21.3

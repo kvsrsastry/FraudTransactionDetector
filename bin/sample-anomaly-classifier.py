@@ -97,8 +97,19 @@ df = vec.transform(df)
 # Identify optimal number of clusters 
 num_clusters = 4
 from fraudtransactiondetector import FraudTransactionClassifier
-classifier = FraudTransactionClassifier(num_clusters=num_clusters,
+classifier = FraudTransactionClassifier(numClusters=num_clusters,
                                         quantile=0.99)
-newdf = classifier.fit(df)
-print('{} : {}'.format(newdf.filter(newdf.anomaly == 1).count(), newdf.filter(~(newdf.anomaly == 1)).count()))
+classifier.fit(df)
+print(classifier.modelValidationMetrics())
+
+# Apply it on entire Training data just to check
+results = classifier.transform(df)
+
+# Apply PCA and Visualize
+classifier.visualizeByApplyingPCA()
+
+print('Number of Outliers in the given dataset of size {} are : {}'.format(results.count(), results.filter(results.prediction == 1).count()))
+
+# Select optimal number of clusters using Elbow Method
+classifier.selectOptimalClusters(df)
 

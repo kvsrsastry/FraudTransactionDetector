@@ -41,3 +41,22 @@ at hand:
 5. PCA
     * Dimensionality Reduction to visualize the data in 3D
 
+How to import and use the package?
+==================================
+Below is the sample usage::
+
+        from fraudtransactiondetector import FraudTransactionClassifier
+        classifier = FraudTransactionClassifier(numClusters=num_clusters,
+                                                quantile=0.99)
+
+        classifier.fit(df)
+        print(classifier.modelValidationMetrics())
+
+        # Apply it on entire Training data just to check
+        results = classifier.transform(df)
+
+        # Apply PCA and Visualize
+        classifier.visualizeByApplyingPCA()
+
+        # Select optimal number of clusters using Elbow Method
+        classifier.selectOptimalClusters(df)

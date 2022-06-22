@@ -14,7 +14,7 @@ setup(
     install_requires=[
         "h2o == 3.30.0.1",
         "pandas == 0.25.1",
-        "numpy == 1.16.5",
+        "numpy == 1.22.0",
         "matplotlib == 3.1.3",
         "scikit-learn == 0.21.3",
     ],
